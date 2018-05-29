@@ -19,7 +19,7 @@ class Auth(object):
             self.index_auth_wrapper(original_index)
 
     def _protect_views(self):
-        # TODO - allow users to white list in case they add their own views
+        # require auth wrapper for all views
         for view_name, view_method in iteritems(
                 self.app.server.view_functions):
             if view_name != self._index_view_name:
