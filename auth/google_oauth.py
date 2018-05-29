@@ -5,15 +5,11 @@ import os
 from flask import Flask, redirect, url_for, render_template, Response, abort
 from flask_dance.contrib.google import make_google_blueprint, google
 from werkzeug.contrib.fixers import ProxyFix
-from flask_sqlalchemy import SQLAlchemy
-from raven.contrib.flask import Sentry
 
 class GoogleOAuth(Auth):
     def __init__(self, app, authorized_emails):
         Auth.__init__(self, app)
         app.server.wsgi_app = ProxyFix(app.server.wsgi_app)
-        
-        sentry = Sentry(app.server)
         app.server.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersekrit")
         app.server.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
         app.server.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
@@ -29,12 +25,9 @@ class GoogleOAuth(Auth):
         if not google.authorized:
             # send to google login
             return False
-        try:
-            resp = google.get("/plus/v1/people/me")
-            assert resp.ok, resp.text
-        except:
-            # send to google login
-            return False
+
+        resp = google.get("/plus/v1/people/me")
+        assert resp.ok, resp.text
 
         email = resp.json()["emails"][0]["value"]
         if email in self.authorized_emails:
