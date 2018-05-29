@@ -2,7 +2,7 @@ from .auth import Auth
 
 import os
 
-from flask import Flask, redirect, url_for, render_template, Response
+from flask import Flask, redirect, url_for, render_template, Response, abort
 from flask_dance.contrib.google import make_google_blueprint, google
 from werkzeug.contrib.fixers import ProxyFix
 from flask_sqlalchemy import SQLAlchemy
@@ -27,20 +27,25 @@ class GoogleOAuth(Auth):
 
     def is_authorized(self):
         if not google.authorized:
+            # send to google login
             return False
         try:
             resp = google.get("/plus/v1/people/me")
             assert resp.ok, resp.text
         except:
+            # send to google login
             return False
 
         email = resp.json()["emails"][0]["value"]
         if email in self.authorized_emails:
+            # send to index
             return True
-        return False
+        else:
+            # unauthorized email
+            return abort(403)
 
     def login_request(self):
-        # send to 
+        # send to google auth page
         return redirect(url_for("google.login"))
 
     def auth_wrapper(self, f):
