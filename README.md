@@ -1,4 +1,4 @@
-# Dash Google OAuth
+# Dash Google Auth
 Basic example of using Google OAuth to authenticate and view a [Dash](https://dash.plot.ly/) app. Uses [flask dance](https://github.com/singingwolfboy/flask-dance) and a modified version of Plotly's own [dash auth](https://github.com/plotly/dash-auth) for authentication.
 
 Steps to try this out yourself (after installing requirements):
