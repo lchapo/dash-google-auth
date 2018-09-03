@@ -1,20 +1,24 @@
+from flask import (
+    redirect,
+    url_for,
+    Response,
+    abort,
+)
+from flask_dance.contrib.google import (
+    make_google_blueprint,
+    google,
+)
+
 from .auth import Auth
-
-import os
-
-from flask import Flask, redirect, url_for, render_template, Response, abort
-from flask_dance.contrib.google import make_google_blueprint, google
-from werkzeug.contrib.fixers import ProxyFix
 
 class GoogleOAuth(Auth):
     def __init__(self, app, authorized_emails):
-        Auth.__init__(self, app)
-        app.server.wsgi_app = ProxyFix(app.server.wsgi_app)
-        app.server.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersekrit")
-        app.server.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
-        app.server.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
+        super(GoogleOAuth, self).__init__(app)
         google_bp = make_google_blueprint(
-            scope=["profile", "email"],
+            scope=[
+                "https://www.googleapis.com/auth/userinfo.email",
+                "https://www.googleapis.com/auth/userinfo.profile",
+            ],
             offline=True,
             reprompt_consent=True,
         )
@@ -26,10 +30,10 @@ class GoogleOAuth(Auth):
             # send to google login
             return False
 
-        resp = google.get("/plus/v1/people/me")
+        resp = google.get("/oauth2/v2/userinfo")
         assert resp.ok, resp.text
 
-        email = resp.json()["emails"][0]["value"]
+        email = resp.json()["email"]
         if email in self.authorized_emails:
             # send to index
             return True
