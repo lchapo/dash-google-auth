@@ -1,7 +1,8 @@
 import os
 
-from flask import Flask 
 from dash import Dash
+from flask import Flask 
+from werkzeug.contrib.fixers import ProxyFix
 
 from .google_oauth import GoogleOAuth
 
@@ -13,6 +14,8 @@ app = Dash(
 	url_base_pathname='/',
 	auth='auth',
 )
+# use workzeug middleware to generate https callback
+server.wsgi_app = ProxyFix(server.wsgi_app)
 
 # configure google oauth using environment variables
 server.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersekrit")
