@@ -12,13 +12,13 @@ from flask_dance.contrib.google import (
 from .auth import Auth
 
 class GoogleOAuth(Auth):
-    def __init__(self, app, authorized_emails):
+    def __init__(self, app, authorized_emails, additional_scopes=None):
         super(GoogleOAuth, self).__init__(app)
         google_bp = make_google_blueprint(
             scope=[
                 "https://www.googleapis.com/auth/userinfo.email",
                 "https://www.googleapis.com/auth/userinfo.profile",
-            ],
+            ] + (additional_scopes if additional_scopes else []),
             offline=True,
             reprompt_consent=True,
         )
