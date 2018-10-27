@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from abc import ABCMeta, abstractmethod
 from six import iteritems, add_metaclass
 
+
 @add_metaclass(ABCMeta)
 class Auth(object):
     def __init__(self, app):
