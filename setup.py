@@ -4,7 +4,6 @@ from setuptools import setup
 
 setup(
     name="dash-google-auth",
-    version='0.1.0',
     description="Dash Google Auth",
     long_description=open('README.md', 'r').read().strip(),
     long_description_content_type='test/markdown',
@@ -21,10 +20,13 @@ setup(
         'Flask-Dance>=0.14.0',
         'six>=1.11.0',
     ],
+    setup_requires=['pytest-runner', 'setuptools_scm'],
     tests_require=['pytest'],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
+    use_scm_version=True,
+    zip_safe=False,
 )
