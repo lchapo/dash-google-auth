@@ -1,0 +1,18 @@
+language: python
+python:
+- '2.7'
+- '3.5'
+- '3.6'
+- '3.7'
+install:
+- pip install -r requirements.txt
+script:
+- pytest
+deploy:
+  provider: pypi
+  user: joshbode
+  password:
+    secure: XLoBRIUZti8jb+G9lD1z4IvIMVRKyR41PbnPPPQ2W8yxiSxawBEC4igUby3vfWQAqY8oiVV0aYhxld+EHucdvfY1lnk0UmWOS+eogCXfY0cDkaENH1XIdMLGMLWcibG4USoBDGSUuu0g3IbREkr6xDGeV6123Sd9AS+T1I9/Dmq9fzPMc4a817Cyu+w6+gQd//pjkZ3Ikdlif6cjMIYgAvuxIkGBeykxwqAl5iDq+a6gdJnrLGDiY/MwXKiuamBecaf/mArr/YCdPw6oP5ZiYZb6JILxhONyfqlt4AxgH26EPl5Ctz+HxMjWoSl6CGc1TF/zJZzXQp4qiC7WFwMY4ZCOQGrkuWd7f/JbWZM27YRWxG20VCpnKhL2KAICpi7EpFMfphiMZ08tSiPVGRQchmXPsbcO5kn7xMHxvHEFfLT9i7bsWFJroDtBmgqOPpzR4iE2le3qJi7AViX4O8irBKqAYCCoZhIJzRdTcgeFlGiIW6JI4EqAXV7zdTAhIvTHqpEUT1uVxUInarL/zkj+INzjY6fqu0insz6FwQ4YWk8frsWlhLKSaVTJQI0jREDW6K8VlFVOmkgBQEk1lZk5JXHun6A7Mh7p3L2VJx7LMHFdllKuYOdfO/cP7bzfMSgNmfgHhk8ONuYBNGQ2m1i1kd5wun2/BgsI5zUCvYy7Ok8=
+  on:
+    tags: true
+  distributions: sdist bdist_wheel

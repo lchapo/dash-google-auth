@@ -21,6 +21,7 @@ setup(
         'Flask-Dance>=0.14.0',
         'six>=1.11.0',
     ],
+    tests_require=['pytest'],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
