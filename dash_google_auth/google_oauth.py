@@ -11,6 +11,7 @@ from flask_dance.contrib.google import (
 
 from .auth import Auth
 
+
 class GoogleOAuth(Auth):
     def __init__(self, app, authorized_emails, additional_scopes=None):
         super(GoogleOAuth, self).__init__(app)

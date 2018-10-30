@@ -1,5 +1,6 @@
-dash==0.26.5
-dash-core-components==0.28.3
-dash-html-components==0.12.0
-Flask==0.12.4
-Flask-Dance==0.14.0
+dash>=0.26.5
+dash-core-components>=0.28.3
+dash-html-components>=0.12.0
+Flask>=0.12.4
+Flask-Dance>=0.14.0
+six>=1.11.0
