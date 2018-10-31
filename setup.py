@@ -5,11 +5,11 @@ from setuptools import setup
 setup(
     name="dash-google-auth",
     description="Dash Google Auth",
-    long_description=open('README.md', 'r').read().strip(),
+    long_description=open('README.md', 'rt').read().strip(),
     long_description_content_type='test/markdown',
     author="Lucas Chapin", author_email='lucas@altschool.com',
     url="https://github.com/lucaschapin/dash-google-auth",
-    license=open('LICENSE', 'r').read().strip(),
+    license='MIT',
     package='dash_google_auth',
     packages=['dash_google_auth'],
     install_requires=[
