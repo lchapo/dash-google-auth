@@ -35,8 +35,7 @@ class GoogleOAuth(Auth):
         resp = google.get("/oauth2/v2/userinfo")
         assert resp.ok, resp.text
 
-        email = resp.json()["email"]
-        session['email'] = email
+        email = session['email'] = resp.json().get('email')
         if email in self.authorized_emails:
             # send to index
             return True
