@@ -3,6 +3,7 @@ from flask import (
     url_for,
     Response,
     abort,
+    session,
 )
 from flask_dance.contrib.google import (
     make_google_blueprint,
@@ -35,6 +36,7 @@ class GoogleOAuth(Auth):
         assert resp.ok, resp.text
 
         email = resp.json()["email"]
+        session['email'] = email
         if email in self.authorized_emails:
             # send to index
             return True

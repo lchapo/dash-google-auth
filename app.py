@@ -8,7 +8,8 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 from dash import Dash
-from flask import Flask
+from dash.dependencies import Input, Output
+from flask import Flask, session
 
 from dash_google_auth import GoogleOAuth
 
@@ -20,6 +21,7 @@ app = Dash(
     url_base_pathname='/',
     auth='auth',
 )
+app.config['suppress_callback_exceptions']=True
 
 # configure google oauth using environment variables
 server.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersekrit")
@@ -47,11 +49,10 @@ def MyDashApp():
 
 
 app.layout = html.Div(children=[
-    html.H1(children="Hello Dash"),
+    html.H1(children="Private Dash App"),
 
-    html.Div(children='''
-    Dash: A web application framework for Python
-    '''),
+    html.Div(id='placeholder', style={'display':'none'}),
+    html.Div(id='welcome'),
 
     dcc.Graph(
         id='example-graph',
@@ -66,6 +67,13 @@ app.layout = html.Div(children=[
         }
     )
 ])
+
+@app.callback(
+    Output('welcome', 'children'),
+    [Input('placeholder', 'value')]
+)
+def on_load(value):
+    return "Welcome, {}!".format(session['email'])
 
 if __name__ == '__main__':
     app.run_server(host='localhost')
