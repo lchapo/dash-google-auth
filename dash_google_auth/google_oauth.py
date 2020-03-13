@@ -14,7 +14,7 @@ from .auth import Auth
 
 
 class GoogleOAuth(Auth):
-    def __init__(self, app, authorized_emails, additional_scopes=None):
+    def __init__(self, app, authorized_emails, additional_scopes=None,redirect_url=None):
         super(GoogleOAuth, self).__init__(app)
         google_bp = make_google_blueprint(
             scope=[
@@ -23,6 +23,7 @@ class GoogleOAuth(Auth):
             ] + (additional_scopes if additional_scopes else []),
             offline=True,
             reprompt_consent=True,
+            redirect_url=redirect_url,
         )
         app.server.register_blueprint(google_bp, url_prefix="/login")
         self.authorized_emails = authorized_emails
