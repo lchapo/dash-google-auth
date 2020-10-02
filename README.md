@@ -1,3 +1,6 @@
+# Deprecation Warning
+This project is no longer actively maintained and is incompatible with newer versions of Dash (>=1.0). Please consider forking this repo or see the [Dash docs](https://dash.plotly.com/authentication) on officially supported authentication mechanisms.
+
 # Dash Google Auth
 
 Dash Google Auth is a simple library using Google OAuth to authenticate and
